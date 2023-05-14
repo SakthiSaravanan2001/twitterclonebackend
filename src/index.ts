@@ -2,7 +2,8 @@ import express  from "express";
 //importing express 
 import userroutes from './Routes/userroutes';
 import tweet from './Routes/tweet';
-import Tokens from './Routes/Tokens'
+import Tokens from './Routes/Tokens';
+import { authtoken } from "./middlewares/authmiddleware";
 const app=express();
 //app uses express
 app.use(express.json());

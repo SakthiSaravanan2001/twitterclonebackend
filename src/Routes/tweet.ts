@@ -1,20 +1,64 @@
 import {  PrismaClient } from "@prisma/client";
 import { Router } from "express";
+import jwt from 'jsonwebtoken'
 const router =Router();
 const prisma =new PrismaClient();
-
-
+const JWT_SECRET="secret";
 //end point as root and i 
 //post is for creating here i am trying to create a user
 router.post('/',async(req,res)=>{
     // const {content,image,userId}=req.body;
-    const {content,image}=req.body;
+
+
+    // const {content,image}=req.body;
+    //we should add authorization this will make you to implement
+    //in auth in rest api
     const authHeader=req.header('authorization')
-    const token=authHeader?.split(' ')[1];
-    if(!token){
+
+    console.log(authHeader)
+    const jwtToken=authHeader?.split(' ')[1];
+    console.log(jwtToken)
+    //just i am interested in token because  to check with id i am
+    //goinng to check with token jwt 
+
+    // if there is no token we have to return the status
+    if(!jwtToken){
         return res.sendStatus(401)
     }
-    console.log(token)
+    
+
+    try {
+        //decode the jwt token
+        //use the save const JWT_SECRET="secret" in token 
+        //because we are going to destructure it
+
+        
+        const payload =await jwt.verify(jwtToken,JWT_SECRET) as{
+            tokenId:number;
+        };
+        console.log("payload",payload)
+        //it will give a token id
+        const dbToken=await prisma.token.findUnique({
+            where:{
+                id:payload.tokenId,
+            },
+            include:{
+                users:true
+            
+
+        }}||null)
+        console.log(dbToken)
+        if(!dbToken?.valid || dbToken.expirationTime <new Date()){
+            return res.status(400).json({error:"api token is expired"})
+        }
+         
+     
+    }
+    catch(e){
+        
+        res.sendStatus(401)
+    }
+
     // console.log(authHeader)
     res.sendStatus(200)
     // try{

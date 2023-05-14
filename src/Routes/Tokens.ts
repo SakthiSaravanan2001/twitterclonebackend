@@ -99,7 +99,7 @@ route.post('/auth',async(req,res)=>{
 
     //here we validate that the user is the owner of the email
     const expiration_auth =new Date(
-        new Date().getTime()+ AUTH_EXP_TOKEN * 60000 *60
+        new Date().getTime()+ AUTH_EXP_TOKEN * 6000000
     )
     const apiToken=await prisma.token.create({
         data:{
