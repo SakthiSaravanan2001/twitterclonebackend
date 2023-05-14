@@ -27,15 +27,19 @@ router.post('/',async(req,res)=>{
 
 //list
 router.get('/',async(req,res)=>{
-    const alluser=await prisma.user.findMany();
+    const alluser=await prisma.user.findMany({
+    });
+
     //prisma.tabel.then anything
     res.json(alluser);
+    
     // res.status(501).json({error:'not implemented'})
 })
 //get one user like sakthi
 router.get('/:id',async(req,res)=>{
     const {id}=req.params;
-    const user=await prisma.user.findUnique({where:{id:Number(id)}})
+    const user=await prisma.user.findUnique({where:{id:Number(id)},include:{tweets:true}}
+)
     res.json(user)
     res.status(200).json({error:`not implemented: ${id}`})
 })
