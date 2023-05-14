@@ -1,4 +1,4 @@
-
+ npm run dev to run the localhost 
 PRISMA:
 initalling prisma :npm install prisma --save-dev //just save in dev dependency
 just what database i want npx prisma init --datasource-provider sqlite
@@ -20,3 +20,14 @@ In summary, npm is used for installing and managing packages, while npx is used 
 
 //then install web prisma client the way to connect to prisma
 npm install @prisma/client 
+
+to see the database :
+npm prisma studio
+
+then to install jwt which is used to encode and decode 
+npm install jsonwebtoken
+
+i face this error 
+npm i --save-dev @types/jsonwebtoken
+
+study about auth

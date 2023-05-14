@@ -1,12 +1,15 @@
 import express  from "express";
 //importing express 
 import userroutes from './Routes/userroutes';
-import tweet from './Routes/tweet'
+import tweet from './Routes/tweet';
+import Tokens from './Routes/Tokens'
 const app=express();
 //app uses express
 app.use(express.json());
 app.use('/user',userroutes)
 app.use('/tweet',tweet)
+app.use('/token',Tokens)
+
 //what ever we sent it will take it as json
 app.get('/',(request,respond)=>{
     respond.send('hello sakthi updated')
